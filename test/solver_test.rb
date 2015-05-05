@@ -30,7 +30,7 @@ class SolverTest < Minitest::Test
 
   def test_it_can_find_peers_for_first_spot
     @solver.make_board
-    assert_equal "", @solver.find_peers
+    assert_equal "", @solver.find_peers_keys
   end
 
   def test

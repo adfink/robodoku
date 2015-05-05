@@ -10,7 +10,6 @@ class Solver
   def initialize(puzzle_text)
     @puzzle_text = puzzle_text
     @board = []
-
   end
 
 
@@ -23,20 +22,17 @@ class Solver
     first = ["z","w","t"]
     second = ["y","v","s"]
     third = ["x","u","r"]
-
     squares = []
-    3.times do
-
-    3.times do
-      squares << [first[0], first[0], first[0]];
-      squares << [second[0], second[0], second[0]];
-      squares << [third[0], third[0], third[0]];
-    end
-
-    first.rotate!
-    second.rotate!
-    third.rotate!
-    end
+      3.times do
+          3.times do
+            squares << [first[0], first[0], first[0]];
+            squares << [second[0], second[0], second[0]];
+            squares << [third[0], third[0], third[0]];
+          end
+        first.rotate!
+        second.rotate!
+        third.rotate!
+      end
     squares.flatten
   end
 
@@ -59,7 +55,6 @@ class Solver
       hash
     end
     final_board
-    # @board = final_positions.flatten.zip(split_data).to_h
   end
 
 
@@ -68,27 +63,26 @@ class Solver
   end
 
 
-  def find_peers
-@board.inject(Hash.new) do |hash, spot|
-    column = spot[0]
-    row = spot[0][1]
-    square = spot[0][2]
+  def find_peers_keys
+    @board.inject(Hash.new) do |hash, spot|
+        column = spot[0]
+        row = spot[0][1]
+        square = spot[0][2]
 
-    column_peers = @board.select do |spot|
-      spot[0] == column
-    end
+        column_peers = @board.select do |spot|
+          spot[0] == column
+        end
+        row_peers = @board.select do |spot|
+          spot[1] == row
+        end
+        square_peers = @board.select do |spot|
+          spot[2] == square
+        end
 
-    row_peers = @board.select do |spot|
-      spot[1] == row
+      keys_of_peers_for_spot = column_peers + row_peers + square_peers
+      hash[spot] = keys_of_peers_for_spot
+      hash
     end
-
-    square_peers = @board.select do |spot|
-      spot[2] == square
-    end
-    keys_of_peers_for_spot = column_peers + row_peers + square_peers
-    hash[spot] = keys_of_peers_for_spot
-    hash
-end
   end
 
 
