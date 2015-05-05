@@ -10,6 +10,7 @@ class Solver
   def initialize(puzzle_text)
     @puzzle_text = puzzle_text
     @board = []
+    @possible_values = ["8", "7", "3", "1", "9", "2", "5", "4", "6"]
   end
 
 
@@ -66,8 +67,8 @@ class Solver
   def find_peers_keys
     @board.inject(Hash.new) do |hash, spot|
         column = spot[0]
-        row = spot[0][1]
-        square = spot[0][2]
+        row = spot[1]
+        square = spot[2]
 
         column_peers = @board.select do |spot|
           spot[0] == column
@@ -78,19 +79,42 @@ class Solver
         square_peers = @board.select do |spot|
           spot[2] == square
         end
-
       keys_of_peers_for_spot = column_peers + row_peers + square_peers
-      hash[spot] = keys_of_peers_for_spot
+      hash[spot] = keys_of_peers_for_spot.uniq
       hash
     end
   end
 
 
-  def find_total_of_peers
-    @board
-    # @board.map do |find_peers
-
+  def find_values_of_peers
+    @board.inject(Hash.new) do |hash, spot|
+      peers_keys_array = find_peers_keys[spot]
+      hash[spot] =  peers_keys_array.map{|peer_key| make_board[peer_key]}.uniq
+      hash
+    end
   end
+
+  def check_for_easy_solution
+    indexes_of_empty_spots = []
+    @puzzle_text.chars.each_with_index do |char, index|
+      if char == " "
+      indexes_of_empty_spots << index
+      end
+    end
+
+    keys_of_empty_spots = indexes_of_empty_spots.map do |index|
+      @board[index]
+    end
+
+    keys_of_empty_spots.map do |key|
+      peer_values = find_values_of_peers[key]
+      possible_solution = @possible_values.map do |value|
+        @possible_values.delete(value) if peer_values.include?(value)
+      end
+      possible_solution
+    end
+  end
+end
 
   # parse into row, column, square
 
@@ -103,7 +127,7 @@ class Solver
   # if not move on to check next open spot
 
 
-end
+
 
 
 
