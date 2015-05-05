@@ -109,8 +109,12 @@ class Solver
     keys_of_empty_spots.map do |key|
       peer_values = find_values_of_peers[key]
       possible_solution = @possible_values.map do |value|
-        @possible_values.delete(value) if peer_values.include?(value)
-      end
+          if peer_values.include?(value)
+            value = nil
+          else
+            value
+          end
+      end.compact
       possible_solution
     end
   end
