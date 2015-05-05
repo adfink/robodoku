@@ -3,11 +3,13 @@ require 'pry'
 
 class Solver
 
+  attr_reader :board
 
   LETTERMAP = ("a".."i").to_a
 
   def initialize(puzzle_text)
     @puzzle_text = puzzle_text
+    @board = []
 
   end
 
@@ -24,7 +26,6 @@ class Solver
 
     squares = []
     3.times do
-
 
     3.times do
       squares << [first[0], first[0], first[0]];
@@ -51,13 +52,50 @@ class Solver
       end
     end
     final_positions = positions.flatten.zip(squares).map(&:join)
-    final_positions.flatten.zip(split_data).to_h
+    @board = final_positions
+    board_with_values = final_positions.zip(split_data)
+    final_board = board_with_values.inject(Hash.new) do |hash, array|
+      hash[array[0]] = array[1]
+      hash
+    end
+    final_board
+    # @board = final_positions.flatten.zip(split_data).to_h
   end
 
 
   def output_data
     @puzzle_text
-    LETTERMAP
+  end
+
+
+  def find_peers
+@board.inject(Hash.new) do |hash, spot|
+    column = spot[0]
+    row = spot[0][1]
+    square = spot[0][2]
+
+    column_peers = @board.select do |spot|
+      spot[0] == column
+    end
+
+    row_peers = @board.select do |spot|
+      spot[1] == row
+    end
+
+    square_peers = @board.select do |spot|
+      spot[2] == square
+    end
+    keys_of_peers_for_spot = column_peers + row_peers + square_peers
+    hash[spot] = keys_of_peers_for_spot
+    hash
+end
+  end
+
+
+  def find_total_of_peers
+    @board
+    # @board.map do |find_peers
+
   end
 
   # parse into row, column, square

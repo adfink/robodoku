@@ -12,24 +12,28 @@ class SolverTest < Minitest::Test
   end
 
   def test_it_solves
+    skip
     assert false, "make it solve!"
   end
 
   def test_it_can_output_puzzle_text
-    skip
-    assert_equal "", @solver.output_data
+    assert_equal 90, @solver.output_data.length
   end
 
   def test_it_can_split_data
-    skip
-    assert_equal "", @solver.split_data
+    assert_equal 81, @solver.split_data.count
   end
 
   def test_it_makes_a_board
-    assert_equal "", @solver.make_board
-    assert_equal "", @solver.build_square_map_array
-
+    assert_equal 81, @solver.make_board
   end
+
+  def test_it_can_find_peers_for_first_spot
+    @solver.make_board
+    assert_equal "", @solver.find_peers
+  end
+
+  def test
 
 
   # validation for solutions --- check row, column, and square
