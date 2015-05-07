@@ -116,7 +116,7 @@ class Solver
           end
       end.compact
       possible_solution
-    end
+    end.flatten
   end
 end
 
