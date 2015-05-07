@@ -1,6 +1,6 @@
 require "minitest"
 require "minitest/autorun"
-require "./lib/new_solver"
+require "./lib/solver"
 # require "pride"
 # require "./lib/sudoku"
 
@@ -8,7 +8,9 @@ class SolverTest < Minitest::Test
 
   def setup
     puzzle_text = File.read("./puzzles/easy_sample.txt")
+    puzzle_text2 = File.read("./puzzles/easy_sample2.txt")
     @solver = Solver.new(puzzle_text)
+    @solver2 = Solver.new(puzzle_text2)
   end
 
   def test_it_can_output_puzzle_text
@@ -38,5 +40,14 @@ class SolverTest < Minitest::Test
     @solver.solve
     assert_equal "8", @solver.final_board["a1z"]
   end
+
+  def test_a_board_can_solve_a_problem_with_two_blank_spaces
+    @solver2.make_board
+    assert_equal " ", @solver2.final_board["a1z"]
+    @solver2.solve
+    assert_equal "8", @solver2.final_board["a1z"]
+    assert_equal "7", @solver2.final_board["g7r"]
+  end
+
 
 end
