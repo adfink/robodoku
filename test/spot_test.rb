@@ -1,7 +1,7 @@
 require "minitest"
 require "minitest/autorun"
 require "./lib/spot"
-require "./lib/new_solver"
+require "./lib/solver"
 # require "pride"
 # require "./lib/sudoku"
 

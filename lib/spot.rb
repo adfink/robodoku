@@ -1,4 +1,4 @@
-require_relative 'new_solver'
+require_relative 'solver'
 require 'pry'
 
 class Spot

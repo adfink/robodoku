@@ -1,6 +1,6 @@
 require "minitest"
 require "minitest/autorun"
-require "./lib/new_solver"
+require "./lib/solver"
 # require "pride"
 # require "./lib/sudoku"
 
@@ -46,6 +46,7 @@ class SolverTest < Minitest::Test
     assert_equal " ", @solver2.final_board["a1z"]
     @solver2.solve
     assert_equal "8", @solver2.final_board["a1z"]
+    assert_equal "7", @solver2.final_board["g7r"]
   end
 
 
