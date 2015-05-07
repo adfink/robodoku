@@ -50,7 +50,8 @@ class Spot
     if answer?
       @board_with_values[position] = check_for_possibilities[0]
     else
-      raise
+      # binding.pry
+      raise RuntimeError, "shoot something didn't go right...it seems as though the row is 8 when it should be 7. don't know why"
     end
   end
 
